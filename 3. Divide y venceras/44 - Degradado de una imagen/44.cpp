@@ -31,14 +31,14 @@ O(n*m)
 pair<bool, int> esDegradado(vector<int> const &v, int ini, int fin)
 {
    if (ini + 1 == fin)
-        return {true, v[ini]};
-    else
-    {
-        int mitad = (ini + fin) / 2;
-        pair<bool, int> iz = esDegradado(v, ini, mitad);
-        pair<bool, int> der = esDegradado(v, mitad, fin);
-        return {iz.first && der.first && iz.second < der.second, iz.second + der.second};
-    }
+      return {true, v[ini]};
+   else
+   {
+      int mitad = (ini + fin) / 2;
+      pair<bool, int> iz = esDegradado(v, ini, mitad);
+      pair<bool, int> der = esDegradado(v, mitad, fin);
+      return {iz.first && der.first && iz.second < der.second, iz.second + der.second};
+   }
 }
 
 bool resolver(vector<vector<int>> const &matriz, int n, int m)
@@ -54,13 +54,13 @@ bool resolver(vector<vector<int>> const &matriz, int n, int m)
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
-bool resuelveCaso () 
+bool resuelveCaso()
 {
    int n, m;
 
    // Leer los datos de la entrada
-   cin >> n;   
-   if (!cin)  // Fin de la entrada
+   cin >> n;
+   if (!cin) // Fin de la entrada
       return false;
    cin >> m;
    vector<vector<int>> matriz(n, vector<int>(m));
@@ -68,7 +68,6 @@ bool resuelveCaso ()
    {
       for (int j = 0; j < m; j++)
          cin >> matriz[i][j];
-      
    }
    // Resolver problema
    bool sol = resolver(matriz, n, m);
@@ -80,20 +79,21 @@ bool resuelveCaso ()
    return true;
 }
 
-int main () 
+int main()
 {
    // Ajustes para que cin extraiga directamente de un fichero
 #ifndef DOMJUDGE
-   ifstream in ("casos.txt");
-   auto cinbuf = cin.rdbuf (in.rdbuf ());
+   ifstream in("casos.txt");
+   auto cinbuf = cin.rdbuf(in.rdbuf());
 #endif
-   
-   while (resuelveCaso ());
-   
-   // Para dejar todo como estaba al principio
+
+   while (resuelveCaso())
+      ;
+
+      // Para dejar todo como estaba al principio
 #ifndef DOMJUDGE
-   cin.rdbuf (cinbuf);
-   system ("PAUSE");
+   cin.rdbuf(cinbuf);
+   system("PAUSE");
 #endif
    return 0;
 }
