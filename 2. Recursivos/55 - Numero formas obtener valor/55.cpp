@@ -11,16 +11,37 @@ using tMatriz = vector<vector<int>>;
 
 int sumaDeValores(vector<int> const &v, tMatriz matriz, int s, int i, int suma)
 {
-    if (s == 0) return 1;
-    else if (v.size() == 0) return 0;
-    else if (i == 0 && s > 0) return s == suma;
+    if (s == 0)
+        return 1;
+    else if (v.size() == 0 || suma > s)
+        return 0;
+    else if (i == 0 && s > 0)
+        return s == suma;
     else
     {
-        if (suma > s) return 0;
-        else 
+        int iz = 0, der = 0;
+        if (v[i - 1] + suma == s)
+            iz = 1;
+        else if (v[i - 1] + suma <= s)
         {
-            
+            if (matriz[i - 1][v[i - 1] + suma] == -1)
+            {
+                matriz[i - 1][v[i - 1] + suma] = sumaDeValores(v, matriz, s, i - 1, v[i - 1] + suma);
+                iz = matriz[i - 1][v[i - 1] + suma];
+            }
         }
+
+        if (suma == s)
+            der = 1;
+        else
+        {
+            if (matriz[i - 1][suma] == -1)
+            {
+                matriz[i - 1][suma] = sumaDeValores(v, matriz, s, i - 1, suma);
+                der = matriz[i - 1][suma];
+            }
+        }
+        return matriz[i][suma] = iz + der;
     }
 }
 
@@ -36,12 +57,13 @@ bool resuelveCaso()
         return false;
 
     vector<int> v(n);
-    for(int &i : v) cin >> i;
+    for (int &i : v)
+        cin >> i;
 
-    tMatriz matriz(n + 1, vector<int>(s + 1, - 1));
+    tMatriz matriz(n + 1, vector<int>(s + 1, -1));
 
     // Resolver problema y escribir sol
-    cout << sumaDeValores(v) << endl;
+    cout << sumaDeValores(v, matriz, s, n, 0) << endl;
 
     return true;
 }
