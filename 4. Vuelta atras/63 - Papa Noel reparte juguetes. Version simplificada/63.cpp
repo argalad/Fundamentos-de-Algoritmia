@@ -19,9 +19,9 @@ bool esValida(vector<string> const &tiposJuguetes, int k, vector<int> const &sol
 {
     if (k % 2 != 0)
     {
-        if (tiposJuguetes[sol[k - 1]] == tiposJuguetes[sol[k]])
+        if (tiposJuguetes[sol[k - 1]] == tiposJuguetes[sol[k]]) // Comprobamos que dos tipos consecutivos no sean iguales
             return false;
-        else if (sol[k - 1] > sol[k])
+        else if (sol[k - 1] > sol[k]) // Comprobamos que los tipos estén en orden
             return false;
     }
 
@@ -33,9 +33,9 @@ void repartir(int n, vector<string> const &tiposJuguetes, int k, vector<int> &so
     for (int i = 0; i < n; i++)
     {
         sol[k] = i;
-        if (esValida(tiposJuguetes, k, sol))
+        if (esValida(tiposJuguetes, k, sol)) // Si es válida
         {
-            if (k == sol.size() - 1)
+            if (k == sol.size() - 1) // Si es solución
             {
                 escribirSolucion(sol);
                 haySol = true;
@@ -50,8 +50,8 @@ void repartir(int n, vector<string> const &tiposJuguetes, int k, vector<int> &so
 // configuración, y escribiendo la respuesta
 bool resuelveCaso()
 {
-    int n, m;
-    bool haySol;
+    int n, m; // Numero de juguetes y número de niños consecutivamente.
+    bool haySol = false;
 
     // Leer los datos de la entrada
     cin >> m >> n;
@@ -65,10 +65,12 @@ bool resuelveCaso()
     vector<int> sol(n * 2);
 
     // Resolver problema
-    repartir(n, tiposJuguetes, 0, sol, haySol);
+    repartir(m, tiposJuguetes, 0, sol, haySol);
 
     if (!haySol)
         cout << "SIN SOLUCION" << endl;
+    else
+        haySol = false;
 
     cout << endl;
 
