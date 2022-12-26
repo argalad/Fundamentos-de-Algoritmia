@@ -11,14 +11,15 @@ using namespace std;
 // Ramas = 
 // Vector solución = 
 
-void asignacionTrabajos(vector<vector<int>> const &tiempos_por_funcionario, const int &num_funcionarios, const int &k, vector<bool> &trabajos, vector<bool> &funcionarios, int &tiempo_total, int &tiempo_actual, vector<int> const &tiempos_acumulados)
+void asignacionTrabajos(vector<vector<int>> const &tiempos_por_funcionario, const int &num_funcionarios, const int &k, 
+                            vector<bool> &funcionarios, int &tiempo_total, int &tiempo_actual, 
+                            vector<int> const &tiempos_acumulados)
 {
     for (int i = 0; i < num_funcionarios; i++)
     {
         tiempo_actual += tiempos_por_funcionario[i][k];
-        if (k < 0 || !trabajos[k] && !funcionarios[i])
+        if (k < 0 || !funcionarios[i]) // Es valida
         {
-            trabajos[k] = true;
             funcionarios[i] = true;
             if (k == num_funcionarios - 1)
             {
@@ -28,9 +29,8 @@ void asignacionTrabajos(vector<vector<int>> const &tiempos_por_funcionario, cons
             else
             {
                 if (tiempos_acumulados[k + 1] + tiempo_actual < tiempo_total)
-                    asignacionTrabajos(tiempos_por_funcionario, num_funcionarios, k + 1, trabajos, funcionarios, tiempo_total, tiempo_actual, tiempos_acumulados);
+                    asignacionTrabajos(tiempos_por_funcionario, num_funcionarios, k + 1, funcionarios, tiempo_total, tiempo_actual, tiempos_acumulados);
             }
-            trabajos[k] = false;
             funcionarios[i] = false;
         }
         tiempo_actual -= tiempos_por_funcionario[i][k];
@@ -53,7 +53,6 @@ bool resuelveCaso()
         for (int &j : i)
             cin >> j;
 
-    vector<bool> trabajos(n);
     vector<bool> funcionarios(n);
     int tiempo_actual = 0;
     int tiempo_total = 1000000;
@@ -72,7 +71,7 @@ bool resuelveCaso()
         tiempos_acumulados[i] += tiempos_minimos[i];
 
     // Resolver problema
-    asignacionTrabajos(tiempos_por_funcionario, n, 0, trabajos, funcionarios, tiempo_total, tiempo_actual, tiempos_acumulados);
+    asignacionTrabajos(tiempos_por_funcionario, n, 0, funcionarios, tiempo_total, tiempo_actual, tiempos_acumulados);
 
     // Escribir sol
     cout << tiempo_total << endl;

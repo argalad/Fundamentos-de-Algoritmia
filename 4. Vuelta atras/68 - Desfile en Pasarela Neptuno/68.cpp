@@ -7,9 +7,15 @@
 
 using namespace std;
 
-void asignarCombinaciones(vector<vector<int>> trajes, vector<vector<int>> zapatos, int n, int k)
+void asignarCombinaciones(vector<vector<int>> trajes, vector<vector<int>> zapatos, vector<bool> modelos, 
+                            vector<int> const &preferencias_acumuladas, int &preferencia_actual, int &preferencia_total, 
+                                const int &n, const int &k)
 {
-
+    for (int i = 0; i < n; i++)
+    {
+        preferencia_actual += 
+    }
+    
 }
 
 
